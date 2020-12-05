@@ -7,7 +7,9 @@ To generate Text from a corpus follow the steps:
 ## **Sample**
 
 ```markov = Markov(text_corpus)```
+
 ```markov.show_summary()```
+
 ```markov.generate(n,start,length,alpha)```
 
 **n: - previous n words to consider**
