@@ -2,7 +2,7 @@
 from scipy.sparse import dok_matrix 
 import random
 import numpy as np
-
+import sys
 
 class Markov():
   
@@ -87,34 +87,89 @@ class Markov():
   
   #Assigning weights to each distinct words to be chosen using weighted_choice function
   def likelihoods(self, word_sequence, next_after_n_words_matrix,n_words_idx_dict, alpha):
-      next_word_vector = (next_after_n_words_matrix[n_words_idx_dict[word_sequence]]).toarray() + alpha
-      likelihoods = next_word_vector/next_word_vector.sum()
-      return likelihoods[0]
+    next_word_vector = (next_after_n_words_matrix[n_words_idx_dict[word_sequence]]).toarray() + alpha
+    likelihoods = next_word_vector/next_word_vector.sum()
+    return likelihoods[0]
 
-   '''
-   Function to generate the random sentence with following arguments.
-   n: number of previous tokens to consider to build the model
-   start: starting sequence to consider
-   length: Number of words to generate
-   alpha: Hyperparameter
-   
-   '''
+  '''
+    Function to generate the random sentence with following arguments.
+    n: number of previous tokens to consider to build the model
+    start: starting sequence to consider
+    length: Number of words to generate
+    alpha: Hyperparameter
+  '''
+
   def generate(self,n, start, length,alpha):
-      next_after_n_words_matrix, n_words_idx_dict = self.n_gram(n)
-      if (start in n_words_idx_dict.keys()) == False::
-          random_start = np.random.choice(list(n_words_idx_dict.keys()))
-          seed = random_start.split(' ')
-           sentence = random_start
-      else:
-        seed = start.split(' ')
-        sentence = start
+    next_after_n_words_matrix, n_words_idx_dict = self.n_gram(n)
+    if (start in n_words_idx_dict.keys()) == False:
+      random_start = np.random.choice(list(n_words_idx_dict.keys()))
+      seed = random_start.split(' ')
+      sentence = random_start
+    else:
+      seed = start.split(' ')
+      sentence = start
         
       #Iterating over the total length to generate the tokens
       
-      for _ in range(length):
-          sentence+=' '
-          likelihood = self.likelihoods(' '.join(seed), next_after_n_words_matrix,n_words_idx_dict,alpha)
-          expected_token = self.ngram_likelihood([likelihood])
-          sentence+=expected_token
-          seed = seed[1:]+[expected_token]
-      return sentence
+    for _ in range(length):
+      sentence+=' '
+      likelihood = self.likelihoods(' '.join(seed), next_after_n_words_matrix,n_words_idx_dict,alpha)
+      expected_token = self.ngram_likelihood([likelihood])
+      sentence+=expected_token
+      seed = seed[1:]+[expected_token]
+    return sentence
+
+#Sentences to generate using a combination of 1-word, 2-word, 3-word markov chain
+  def mixed_n_generate(self,seed, chain_length,alpha,seed_length=3):
+    current_words = seed.split(' ')
+    if len(current_words) != seed_length:
+        raise ValueError(f'wrong number of words, expected {seed_length}')
+    sentence = seed
+    next_after_1_words_matrix, n1_words_idx_dict = self.n_gram(1)
+    next_after_2_words_matrix, n2_words_idx_dict = self.n_gram(2)
+    next_after_3_words_matrix, n3_words_idx_dict = self.n_gram(3)
+    for _ in range(chain_length):
+        sentence+=' '
+        word_sequence1 = current_words[-1:]
+        word_sequence2 = current_words[-2:]
+        word_sequence3 = current_words[-3:]
+        l1 = self.likelihoods(' '.join(word_sequence1), next_after_1_words_matrix,n1_words_idx_dict,alpha)
+        if ' '.join(word_sequence2) in [n2_words_idx_dict.keys()]:
+          l2 = self.likelihoods(' '.join(word_sequence2), next_after_2_words_matrix,n2_words_idx_dict,alpha)
+          if ' '.join(word_sequence3) in [n3_words_idx_dict.keys()]:
+            l3 = self.likelihoods(' '.join(word_sequence3), next_after_3_words_matrix,n3_words_idx_dict,alpha)
+            l = [l1,l2,l3]
+          else:
+            l = [l1,l2]
+        elif ' '.join(word_sequence3) in [n3_words_idx_dict.keys()]:
+          l = [l1,l3]
+        else:
+          l = [l1]
+        next_word = self.ngram_likelihood(l)
+        sentence+=next_word
+        current_words = current_words+[next_word]
+    return sentence
+
+if __name__ == "__main__":
+  path = sys.argv[1]
+  n = int(sys.argv[2])
+  start = sys.argv[3]
+  length = int(sys.argv[4])
+  alpha = int(sys.argv[5])
+  choice = int(sys.argv[6])
+  try:
+    fileopen = open(path,'r',encoding = 'utf-8')
+    text = fileopen.read()
+    markov = Markov(text)
+    markov.show_summary()
+    if choice == 1:
+      text = markov.generate(n,start,length,alpha)
+      print(markov.generate(n,start,length,alpha))
+    elif choice == 2:
+      text = markov.mixed_n_generate(start,length,alpha)
+      print(text)
+    else:
+      print("Wrong Choice")
+  except:
+    print("Path invalid or wrong arguments")
+      
