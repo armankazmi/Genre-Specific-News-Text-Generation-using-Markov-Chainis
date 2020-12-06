@@ -36,5 +36,6 @@ example: ```run python markov.py path_to_text_corpus 2 "He is" 50 0 1 ```
 
 **To generate using a mixed markov chain model:-**
 
-example: ```run python markov.py path_to_text_corpus "He is at" 50 0 2 ```
 open the terminal in the file location and ```run python markov.py path_to_text_corpus seed length alpha 2 ```
+
+example: ```run python markov.py path_to_text_corpus "He is at" 50 0 2 ```
