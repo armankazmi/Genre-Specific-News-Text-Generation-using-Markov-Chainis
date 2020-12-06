@@ -23,6 +23,8 @@ class Markov():
     self.corpus = text
     self.corpus = self.corpus.replace('“', ' " ')
     self.corpus = self.corpus.replace('”', ' " ')
+    self.corpus = self.corpus.replace('\n', ' ')
+    self.corpus = self.corpus.replace('\t', ' ')
     
     #Removing unwanted charachters from the text corpus.
   
