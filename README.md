@@ -1,7 +1,6 @@
 # News-Text-Generation-using-Markov-Chains
 
-**This project is about experimenting with Markov Chains to gener-
-ate News text having a writing style similiar to that of Fiction or Non-Fiction
+**This project is about experimenting with Markov Chains to generate News text having a writing style similiar to that of Fiction or Non-Fiction
 texts .**
 
 For more detail kindly follow report.pdf
