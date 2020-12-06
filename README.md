@@ -39,3 +39,13 @@ example: ```run python markov.py path_to_text_corpus 2 "He is" 50 0 1 ```
 open the terminal in the file location and ```run python markov.py path_to_text_corpus seed length alpha 2 ```
 
 example: ```run python markov.py path_to_text_corpus "He is at" 50 0 2 ```
+
+## **To generate the results of the project-**
+
+open the terminal in the file location and ```run python results.py path_to_text_corpus ```
+
+Output:- No. of Fiction and Non-Fiction articles generated out of 100 random articles.
+
+**Note: The code is based on the paper [A Simple Approach to Classify Fictional and Non-Fictional Genres](https://www.aclweb.org/anthology/W19-3409/)**
+
+Github Repo:- [https://github.com/rameez-mrq/ficto-news]
