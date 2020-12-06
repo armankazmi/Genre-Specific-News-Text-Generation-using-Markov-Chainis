@@ -1,5 +1,12 @@
 # News-Text-Generation-using-Markov-Chains
 
+**This project is about experimenting with Markov Chains to gener-
+ate News text having a writing style similiar to that of Fiction or Non-Fiction
+texts .**
+
+For more detail kindly follow report.pdf
+
+**Steps to generate the text**
 
 ## **Markov class methods**
 
@@ -12,7 +19,7 @@
 
 ```mixed_n_generate(start,length,alpha)```
 
-**show_summary() is a function to print he summary of the text**
+**show_summary() is a function to print the summary of the text**
 
 **generate() is the function to generate text with the following arguments:-**
 
