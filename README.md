@@ -1,21 +1,40 @@
 # News-Text-Generation-using-Markov-Chains
 
-## **Sample**
 
-```f = open("path to corpus")```
+## **Markov class methods**
 
-```text_corpus = f.read()```
 
-```markov_model = Markov(text_corpus)```
+```Class:- Markov(text_corpus)```
 
-```markov_model.show_summary()```
+```show_summary()```
 
-```markov_model.generate(n,start,length,alpha)```
+```generate(n,start,length,alpha)```
 
-**n: - previous n words to consider**
+```mixed_n_generate(start,length,alpha)```
 
-**start:- seed words to generate the text**
+**show_summary() is a function to print he summary of the text**
 
-**length:- number of words to generate in the text**
+**generate() is the function to generate text with the following arguments:-**
 
-**alpha :- Hyperparameter, perferably 0 for better results**
+  * **n: - previous n words to consider**
+
+  * **start:- seed words to generate the text**
+
+  * **length:- number of words to generate in the text**
+
+  * **alpha :- Hyperparameter, perferably 0 for better results**
+
+**mixed_n_generate() is the function to generate text by using a combination of 1-word, 2-word, 3-word markov chains. The arguments are same as that of generate()**
+
+## **Sample:-**
+
+**To generate using a single n-word markov chains:-**
+
+open the terminal in the file location and ```run python markov.py path_to_text_corpus n seed length alpha 1 ```
+
+example: ```run python markov.py path_to_text_corpus 2 "He is" 50 0 1 ```
+
+**To generate using a mixed markov chain model:-**
+
+example: ```run python markov.py path_to_text_corpus "He is at" 50 0 2 ```
+open the terminal in the file location and ```run python markov.py path_to_text_corpus seed length alpha 2 ```
