@@ -1,21 +1,21 @@
-# Genre-Specific-News-Text-Generation-using-Markov-Chains
-
-To generate Text from a corpus follow the steps:
-
-**open the interactive python shell in the file location and run ```python markov.py```**
+# News-Text-Generation-using-Markov-Chains
 
 ## **Sample**
 
-```markov = Markov(text_corpus)```
+```f = open("path to corpus")```
 
-```markov.show_summary()```
+```text_corpus = f.read()```
 
-```markov.generate(n,start,length,alpha)```
+```markov_model = Markov(text_corpus)```
+
+```markov_model.show_summary()```
+
+```markov_model.generate(n,start,length,alpha)```
 
 **n: - previous n words to consider**
 
 **start:- seed words to generate the text**
 
-**length:- number of words in the text**
+**length:- number of words to generate in the text**
 
-**alpha :- Hyperparameter perferably 0 for better results**
+**alpha :- Hyperparameter, perferably 0 for better results**
